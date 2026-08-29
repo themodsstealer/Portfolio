@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hassan Ismail — Network Security Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --void:#0a0e12;
+    --panel:#0f151b;
+    --panel-raised:#141c24;
+    --line:#212b34;
+    --line-soft:#182029;
+    --text:#e9eef3;
+    --text-dim:#8b98a6;
+    --text-faint:#5a6672;
+    --up:#34d399;
+    --up-dim:#1c4633;
+    --signal:#f2a93b;
+    --link:#5b8def;
+    --danger:#e0645a;
+    --radius:3px;
+    --mono:'IBM Plex Mono', ui-monospace, monospace;
+    --sans:'IBM Plex Sans', -apple-system, sans-serif;
+    --display:'Space Grotesk', var(--sans);
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--void);
+    color:var(--text);
+    font-family:var(--sans);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+
+  a{color:inherit;}
+  img{max-width:100%;display:block;}
+
+  ::selection{background:var(--up-dim);color:var(--up);}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 32px;}
+
+  /* faint grid texture backdrop */
+  body::before{
+    content:"";
+    position:fixed;inset:0;
+    background-image:
+      linear-gradient(var(--line-soft) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line-soft) 1px, transparent 1px);
+    background-size:64px 64px;
+    opacity:.25;
+    pointer-events:none;
+    z-index:0;
+    mask-image:radial-gradient(ellipse 80% 60% at 50% 0%, black 0%, transparent 70%);
+  }
+
+  /* ---------- status strip signature component ---------- */
+  .status-strip{
+    display:flex;flex-wrap:wrap;gap:0;
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    font-family:var(--mono);
+    font-size:11.5px;
+    letter-spacing:.04em;
+    color:var(--text-dim);
+    position:relative;
+    z-index:1;
+  }
+  .status-strip .item{
+    display:flex;align-items:center;gap:8px;
+    padding:10px 22px;
+    border-right:1px solid var(--line);
+    white-space:nowrap;
+  }
+  .status-strip .item:last-child{border-right:none;}
+  .dot{width:6px;height:6px;border-radius:50%;background:var(--up);box-shadow:0 0 8px var(--up);flex:none;}
+  .dot.amber{background:var(--signal);box-shadow:0 0 8px var(--signal);}
+  .dot.blue{background:var(--link);box-shadow:0 0 8px var(--link);}
+  .status-strip b{color:var(--text);font-weight:500;}
+
+  /* ---------- top nav ---------- */
+  header.top{
+    position:sticky;top:0;z-index:50;
+    background:rgba(10,14,18,.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .navbar{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:16px 32px;
+    max-width:1180px;margin:0 auto;
+  }
+  .brand{
+    font-family:var(--mono);
+    font-size:13px;
+    letter-spacing:.02em;
+    color:var(--text);
+    display:flex;align-items:center;gap:10px;
+  }
+  .brand .dot{width:7px;height:7px;}
+  nav.links{display:flex;gap:28px;font-family:var(--mono);font-size:12.5px;color:var(--text-dim);}
+  nav.links a{text-decoration:none;transition:color .15s ease;position:relative;}
+  nav.links a:hover{color:var(--up);}
+  nav.links a:focus-visible{outline:1px solid var(--up);outline-offset:4px;}
+  .nav-download{
+    border:1px solid var(--line);border-radius:2px;
+    padding:6px 12px;color:var(--text-dim)!important;
+    display:inline-flex;align-items:center;gap:7px;
+  }
+  .nav-download:hover{border-color:var(--up);color:var(--up)!important;}
+  .nav-download svg{width:12px;height:12px;stroke:currentColor;}
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;z-index:1;
+    padding:88px 0 0;
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns:1.25fr .75fr;
+    gap:56px;
+    align-items:center;
+  }
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--up);
+    display:flex;align-items:center;gap:10px;
+    margin-bottom:22px;
+  }
+  .eyebrow::before{content:"";width:22px;height:1px;background:var(--up);}
+
+  h1.name{
+    font-family:var(--display);
+    font-weight:600;
+    font-size:clamp(40px,5.4vw,68px);
+    line-height:1.02;
+    letter-spacing:-.02em;
+    color:var(--text);
+  }
+  h1.name span{color:var(--text-faint);}
+
+  .role{
+    font-family:var(--mono);
+    font-size:16px;
+    color:var(--text-dim);
+    margin-top:18px;
+    letter-spacing:.01em;
+  }
+  .role b{color:var(--signal);font-weight:500;}
+
+  .lede{
+    margin-top:22px;
+    max-width:52ch;
+    color:var(--text-dim);
+    font-size:16px;
+  }
+
+  .contact-row{
+    margin-top:34px;
+    display:flex;flex-wrap:wrap;gap:12px;
+  }
+  .chip{
+    display:inline-flex;align-items:center;gap:9px;
+    padding:11px 16px;
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    font-family:var(--mono);
+    font-size:13px;
+    color:var(--text);
+    text-decoration:none;
+    background:var(--panel);
+    transition:border-color .15s ease, transform .15s ease, background .15s ease;
+  }
+  .chip:hover{border-color:var(--up);background:var(--panel-raised);transform:translateY(-1px);}
+  .chip svg{width:14px;height:14px;stroke:var(--up);flex:none;}
+  .chip.primary{border-color:var(--up);color:var(--up);}
+
+  .portrait-frame{
+    position:relative;
+    justify-self:end;
+    width:100%;
+    max-width:320px;
+  }
+  .portrait-frame .glow{
+    position:absolute;inset:-40px;
+    background:radial-gradient(circle at 50% 30%, rgba(52,211,153,.16), transparent 65%);
+    z-index:0;
+  }
+  .portrait-box{
+    position:relative;z-index:1;
+    border:1px solid var(--line);
+    background:var(--panel);
+    padding:10px;
+    border-radius:var(--radius);
+  }
+  .portrait-box img{
+    width:100%;
+    display:block;
+    filter:grayscale(.15) contrast(1.03);
+    background:#05070a;
+  }
+  .portrait-tag{
+    display:flex;justify-content:space-between;align-items:center;
+    font-family:var(--mono);font-size:10.5px;color:var(--text-faint);
+    padding:9px 4px 2px;
+    letter-spacing:.05em;
+  }
+  .portrait-tag .live{color:var(--up);display:flex;align-items:center;gap:6px;}
+
+  /* ---------- section shell ---------- */
+  section{position:relative;z-index:1;padding:112px 0;}
+  section.tight{padding:88px 0;}
+  .section-head{margin-bottom:56px;max-width:60ch;}
+  .section-head .eyebrow{margin-bottom:16px;}
+  h2.h2{
+    font-family:var(--display);
+    font-weight:600;
+    font-size:clamp(28px,3.4vw,40px);
+    letter-spacing:-.015em;
+    color:var(--text);
+  }
+  .section-head p{color:var(--text-dim);margin-top:14px;font-size:15.5px;max-width:56ch;}
+
+  /* ---------- work index ---------- */
+  .index-list{border-top:1px solid var(--line);}
+  .index-row{
+    display:grid;
+    grid-template-columns:64px 1fr auto;
+    gap:24px;
+    align-items:baseline;
+    padding:26px 0;
+    border-bottom:1px solid var(--line);
+    text-decoration:none;
+    transition:padding-left .2s ease, background .2s ease;
+  }
+  .index-row:hover{padding-left:10px;background:linear-gradient(90deg, var(--panel), transparent);}
+  .index-num{font-family:var(--mono);color:var(--text-faint);font-size:13px;}
+  .index-title{font-family:var(--display);font-size:22px;font-weight:600;color:var(--text);}
+  .index-sub{display:block;font-family:var(--sans);font-size:13.5px;color:var(--text-dim);font-weight:400;margin-top:4px;}
+  .index-tags{display:flex;gap:8px;font-family:var(--mono);font-size:11px;color:var(--text-faint);flex-wrap:wrap;justify-content:flex-end;}
+  .index-tags span{border:1px solid var(--line);padding:4px 9px;border-radius:2px;white-space:nowrap;}
+
+  /* ---------- project case studies ---------- */
+  .case{
+    border:1px solid var(--line);
+    background:var(--panel);
+    border-radius:4px;
+    overflow:hidden;
+    margin-bottom:36px;
+  }
+  .case-header{
+    padding:36px 40px 30px;
+    border-bottom:1px solid var(--line);
+  }
+  .case-kicker{
+    font-family:var(--mono);font-size:11.5px;color:var(--text-faint);
+    letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px;
+  }
+  .case-title{font-family:var(--display);font-size:clamp(24px,2.6vw,32px);font-weight:600;color:var(--text);letter-spacing:-.01em;}
+  .case-desc{color:var(--text-dim);margin-top:14px;max-width:74ch;font-size:15px;}
+
+  .diagram{
+    padding:34px 40px;
+    border-bottom:1px solid var(--line);
+    background:
+      linear-gradient(var(--line-soft) 1px, transparent 1px) 0 0 / 100% 24px,
+      var(--panel-raised);
+  }
+  .diagram svg{width:100%;height:auto;display:block;}
+
+  /* tabs */
+  .tabbar{
+    display:flex;gap:0;
+    border-bottom:1px solid var(--line);
+    background:var(--panel-raised);
+    font-family:var(--mono);
+    padding:0 40px;
+  }
+  .tab-btn{
+    appearance:none;background:none;border:none;
+    color:var(--text-dim);
+    font-family:var(--mono);
+    font-size:13px;
+    letter-spacing:.03em;
+    padding:16px 22px 14px;
+    cursor:pointer;
+    border-bottom:2px solid transparent;
+    display:flex;align-items:center;gap:9px;
+    transition:color .15s ease;
+  }
+  .tab-btn .dot{width:6px;height:6px;}
+  .tab-btn:hover{color:var(--text);}
+  .tab-btn.active{color:var(--up);border-bottom-color:var(--up);}
+  .tab-btn:focus-visible{outline:1px solid var(--up);outline-offset:-2px;}
+
+  .tab-meta{
+    padding:22px 40px 0;
+    display:flex;flex-wrap:wrap;gap:10px;
+  }
+  .meta-pill{
+    font-family:var(--mono);font-size:11.5px;color:var(--text-dim);
+    border:1px solid var(--line);border-radius:2px;padding:6px 10px;
+  }
+  .meta-pill b{color:var(--text);font-weight:500;}
+
+  .gallery{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:1px;
+    background:var(--line);
+    padding:24px 40px 40px;
+    padding-top:22px;
+  }
+  .gallery{padding-top:22px;}
+  .shot{
+    background:var(--panel);
+    display:flex;flex-direction:column;
+    cursor:zoom-in;
+    transition:transform .18s ease;
+  }
+  .shot:hover{transform:translateY(-2px);}
+  .shot .frame{
+    border-bottom:1px solid var(--line);
+    background:#05070a;
+    overflow:hidden;
+    aspect-ratio:16/10;
+  }
+  .shot img{width:100%;height:100%;object-fit:cover;object-position:top;transition:transform .35s ease;}
+  .shot:hover img{transform:scale(1.035);}
+  .shot .cap{padding:14px 16px 18px;}
+  .shot .cap .t{font-family:var(--mono);font-size:12px;color:var(--up);margin-bottom:6px;letter-spacing:.02em;}
+  .shot .cap .d{font-size:13px;color:var(--text-dim);line-height:1.5;}
+
+  @media (max-width:860px){
+    .gallery{grid-template-columns:1fr 1fr;padding-left:22px;padding-right:22px;}
+    .tabbar,.tab-meta,.case-header{padding-left:22px;padding-right:22px;}
+    .diagram{padding-left:22px;padding-right:22px;}
+  }
+  @media (max-width:600px){
+    .gallery{grid-template-columns:1fr;}
+  }
+
+  /* ---------- personal principle ---------- */
+  .principle{
+    margin-top:26px;
+    padding-left:16px;
+    border-left:2px solid var(--line);
+    font-family:var(--mono);
+    font-size:12.5px;
+    color:var(--text-faint);
+    max-width:44ch;
+  }
+  .principle b{color:var(--text-dim);font-weight:500;}
+
+  /* ---------- services ---------- */
+  .svc-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+  }
+  .svc-card{
+    background:var(--panel);
+    padding:28px 26px;
+  }
+  .svc-num{font-family:var(--mono);font-size:12px;color:var(--text-faint);margin-bottom:14px;}
+  .svc-title{font-family:var(--display);font-size:17px;font-weight:600;color:var(--text);margin-bottom:10px;letter-spacing:-.005em;}
+  .svc-card p{font-size:13.5px;color:var(--text-dim);line-height:1.55;}
+  .svc-tag{
+    display:inline-block;margin-top:14px;
+    font-family:var(--mono);font-size:10.5px;color:var(--up);
+    border:1px solid var(--up-dim);background:rgba(52,211,153,.06);
+    padding:4px 9px;border-radius:2px;
+  }
+  @media (max-width:860px){ .svc-grid{grid-template-columns:1fr 1fr;} }
+  @media (max-width:600px){ .svc-grid{grid-template-columns:1fr;} }
+
+  /* ---------- education ---------- */
+  .edu-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:24px;
+  }
+  .edu-card{
+    border:1px solid var(--line);
+    background:var(--panel);
+    border-radius:4px;
+    overflow:hidden;
+    display:flex;flex-direction:column;
+  }
+  .edu-photo{aspect-ratio:16/9;overflow:hidden;background:#05070a;border-bottom:1px solid var(--line);}
+  .edu-photo img{width:100%;height:100%;object-fit:cover;filter:saturate(.92) contrast(1.02);}
+  .edu-body{padding:26px 28px 30px;}
+  .edu-kicker{font-family:var(--mono);font-size:11px;color:var(--signal);letter-spacing:.06em;margin-bottom:10px;}
+  .edu-title{font-family:var(--display);font-size:19px;font-weight:600;color:var(--text);}
+  .edu-sub{font-family:var(--sans);font-size:13px;color:var(--text-dim);margin-top:4px;}
+  .edu-desc{margin-top:14px;font-size:13.5px;color:var(--text-dim);line-height:1.6;}
+  .cert-row{display:flex;gap:12px;margin-top:20px;flex-wrap:wrap;}
+  .cert-chip{
+    appearance:none;background:var(--panel-raised);border:1px solid var(--line);
+    border-radius:3px;padding:8px;display:flex;align-items:center;gap:10px;
+    cursor:zoom-in;text-align:left;transition:border-color .15s ease;
+    font-family:var(--sans);color:var(--text-dim);
+  }
+  .cert-chip:hover{border-color:var(--up);}
+  .cert-chip img{width:46px;height:33px;object-fit:cover;border:1px solid var(--line);flex:none;border-radius:2px;}
+  .cert-chip span{font-size:11px;line-height:1.4;}
+  .cert-chip i{font-style:normal;color:var(--text-faint);font-family:var(--mono);font-size:10px;}
+
+  @media (max-width:760px){
+    .edu-grid{grid-template-columns:1fr;}
+  }
+
+  /* ---------- skills & tools ---------- */
+  .skills-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+  }
+  .skills-col{background:var(--panel);padding:30px 32px;}
+  .skills-col-title{
+    font-family:var(--mono);font-size:11.5px;color:var(--text-faint);
+    letter-spacing:.08em;text-transform:uppercase;margin-bottom:18px;
+  }
+  .skill-tag-list{display:flex;flex-wrap:wrap;gap:10px;}
+  .skill-tag{
+    font-family:var(--sans);font-size:13.5px;color:var(--text);
+    border:1px solid var(--line);border-radius:2px;
+    padding:9px 14px;background:var(--panel-raised);
+    display:flex;align-items:center;gap:8px;
+  }
+  .skill-tag .dot{width:5px;height:5px;flex:none;}
+  @media (max-width:760px){ .skills-grid{grid-template-columns:1fr;} }
+
+  /* ---------- footer / contact ---------- */
+  footer{
+    border-top:1px solid var(--line);
+    padding:80px 0 40px;
+    position:relative;z-index:1;
+  }
+  .footer-grid{
+    display:grid;grid-template-columns:1.2fr .8fr;gap:40px;
+    padding-bottom:40px;
+    border-bottom:1px solid var(--line);
+  }
+  .footer-title{font-family:var(--display);font-size:clamp(26px,3vw,36px);font-weight:600;letter-spacing:-.015em;max-width:16ch;}
+  .footer-title .up{color:var(--up);}
+  .footer-contacts{display:flex;flex-direction:column;gap:14px;align-items:flex-start;justify-content:center;}
+  .footer-contacts .chip{max-width:100%;}
+  .foot-line{display:flex;gap:22px;justify-content:space-between;align-items:center;padding-top:26px;font-family:var(--mono);font-size:11.5px;color:var(--text-faint);flex-wrap:wrap;}
+
+  @media (max-width:760px){
+    .hero-grid{grid-template-columns:1fr;}
+    .portrait-frame{justify-self:start;max-width:220px;margin-top:40px;}
+    .footer-grid{grid-template-columns:1fr;}
+    nav.links{display:none;}
+    .index-row{grid-template-columns:40px 1fr;}
+    .index-tags{display:none;}
+  }
+
+  /* ---------- lightbox ---------- */
+  .lightbox{
+    position:fixed;inset:0;background:rgba(6,9,12,.92);
+    display:none;align-items:center;justify-content:center;
+    z-index:200;padding:40px;backdrop-filter:blur(4px);
+  }
+  .lightbox.open{display:flex;}
+  .lightbox img{max-width:92vw;max-height:86vh;border:1px solid var(--line);box-shadow:0 30px 80px rgba(0,0,0,.6);}
+  .lightbox-cap{
+    position:absolute;bottom:28px;left:0;right:0;text-align:center;
+    font-family:var(--mono);font-size:12px;color:var(--text-dim);
+  }
+  .lightbox-close{
+    position:absolute;top:24px;right:32px;
+    font-family:var(--mono);color:var(--text-dim);
+    background:none;border:1px solid var(--line);
+    padding:8px 14px;cursor:pointer;font-size:12px;
+    border-radius:2px;
+  }
+  .lightbox-close:hover{color:var(--up);border-color:var(--up);}
+
+  /* reveal on scroll */
+  .reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease, transform .6s ease;}
+  .reveal.in{opacity:1;transform:none;}
+
+  @media (prefers-reduced-motion:reduce){
+    .reveal{opacity:1;transform:none;transition:none;}
+    .shot,.chip{transition:none;}
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="navbar">
+    <div class="brand"><span class="dot"></span> HASSAN ISMAIL — SEC/ENG</div>
+    <nav class="links">
+      <a href="#work">Work</a>
+      <a href="#skills">Skills</a>
+      <a href="#services">Services</a>
+      <a href="#education">Education</a>
+      <a href="#contact">Contact</a>
+      <a class="nav-download" href="Hassan-Ismail-Portfolio.pdf" download>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M4 20h16"/></svg>
+        PDF
+      </a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-grid">
+        <div>
+          <div class="eyebrow">Network &amp; Security Engineer</div>
+          <h1 class="name">Hassan<br>Ismail<span>.</span></h1>
+          <div class="role">Firewalls, routing &amp; VPN — built and verified on <b>FortiGate</b>.</div>
+          <p class="lede">I design and harden network infrastructure end to end — high‑availability firewall clusters, SD‑WAN edges, site‑to‑site IPsec tunnels, and segmented DMZ architectures — then prove every path with a policy trace and a CLI ping.</p>
+          <p class="principle">"Failure is a milestone for success." <b>— a line I build by.</b></p>
+          <div class="contact-row">
+            <a class="chip primary" href="mailto:Hassanismailtheemperor@gmail.com">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M22 6l-10 7L2 6"/></svg>
+              Hassanismailtheemperor@gmail.com
+            </a>
+            <a class="chip" href="tel:+201032702926">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .3 2 .6 2.9a2 2 0 0 1-.5 2.1L8 10a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.9.5 2.9.6a2 2 0 0 1 1.7 2z"/></svg>
+              +20 103 270 2926
+            </a>
+            <a class="chip" href="https://www.linkedin.com/in/hassan-ismael-hassan-mohamed-1a014b3a3" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+              LinkedIn
+            </a>
+            <div class="chip" style="cursor:default;">
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              Qena, Egypt
+            </div>
+            <a class="chip" href="Hassan-Ismail-Portfolio.pdf" download>
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M4 20h16"/></svg>
+              Download PDF
+            </a>
+          </div>
+        </div>
+        <div class="portrait-frame">
+          <div class="glow"></div>
+          <div class="portrait-box">
+            <img src="assets/profile.jpeg" alt="Portrait of Hassan Ismail">
+            <div class="portrait-tag">
+              <span>ID: H.ISMAIL</span>
+              <span class="live"><span class="dot"></span> STATUS: AVAILABLE</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="status-strip">
+      <div class="item"><span class="dot"></span> HA CLUSTER <b>SYNCHRONIZED</b></div>
+      <div class="item"><span class="dot blue"></span> IPSEC TUNNEL <b>UP · 0% LOSS</b></div>
+      <div class="item"><span class="dot amber"></span> SD-WAN <b>DUAL-WAN ACTIVE</b></div>
+      <div class="item"><span class="dot"></span> DMZ <b>SEGMENTED</b></div>
+    </div>
+  </section>
+
+  <section id="work" class="tight">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">Selected Work</div>
+        <h2 class="h2">Two builds, verified end to end</h2>
+        <p>Every policy shown here was traced from interface to route to rule, then confirmed live from the CLI.</p>
+      </div>
+
+      <div class="index-list reveal">
+        <a class="index-row" href="#project-vpn">
+          <span class="index-num">01</span>
+          <span>
+            <span class="index-title">HA Cluster ↔ SD‑WAN Site‑to‑Site VPN</span>
+            <span class="index-sub">Two independent FortiGate sites joined over an encrypted tunnel</span>
+          </span>
+          <span class="index-tags"><span>HA</span><span>SD-WAN</span><span>IPsec</span><span>Routing</span></span>
+        </a>
+        <a class="index-row" href="#project-dmz">
+          <span class="index-num">02</span>
+          <span>
+            <span class="index-title">DMZ Segmentation</span>
+            <span class="index-sub">Three‑legged firewall isolating public‑facing services from the LAN</span>
+          </span>
+          <span class="index-tags"><span>DMZ</span><span>Policy</span><span>Zoning</span></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills" class="tight">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">Skills &amp; Tools</div>
+        <h2 class="h2">What's actually behind the work</h2>
+        <p>Every item here is exercised somewhere in the two builds on this page.</p>
+      </div>
+      <div class="skills-grid reveal">
+        <div class="skills-col">
+          <div class="skills-col-title">Core Skills</div>
+          <div class="skill-tag-list">
+            <span class="skill-tag"><span class="dot"></span>Firewall Policy Design</span>
+            <span class="skill-tag"><span class="dot"></span>High Availability (HA) Clustering</span>
+            <span class="skill-tag"><span class="dot"></span>Site‑to‑Site IPsec VPN</span>
+            <span class="skill-tag"><span class="dot amber"></span>SD‑WAN (Multi‑WAN)</span>
+            <span class="skill-tag"><span class="dot"></span>Network Segmentation (DMZ)</span>
+            <span class="skill-tag"><span class="dot blue"></span>Static &amp; Failsafe Routing</span>
+            <span class="skill-tag"><span class="dot"></span>CLI‑Based Verification &amp; Diagnostics</span>
+          </div>
+        </div>
+        <div class="skills-col">
+          <div class="skills-col-title">Tools &amp; Platforms</div>
+          <div class="skill-tag-list">
+            <span class="skill-tag"><span class="dot"></span>FortiOS / FortiGate VM64</span>
+            <span class="skill-tag"><span class="dot"></span>FortiGate CLI Console</span>
+            <span class="skill-tag"><span class="dot amber"></span>Python (Intro + Intermediate)</span>
+            <span class="skill-tag"><span class="dot blue"></span>Network Fundamentals &amp; Protocols</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="services" class="tight">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">What I Do</div>
+        <h2 class="h2">Services</h2>
+        <p>Scope drawn directly from the two builds on this page.</p>
+      </div>
+      <div class="svc-grid reveal">
+        <div class="svc-card">
+          <div class="svc-num">01</div>
+          <div class="svc-title">Firewall &amp; Policy Design</div>
+          <p>Rule sets built around least privilege — explicit deny where it matters, scoped ACCEPT rules everywhere else, all under UTM inspection.</p>
+          <span class="svc-tag">Project 01 · 02</span>
+        </div>
+        <div class="svc-card">
+          <div class="svc-num">02</div>
+          <div class="svc-title">High Availability</div>
+          <p>Active‑passive FortiGate clustering with unit priority and synchronization, so a single hardware failure doesn't take the network down.</p>
+          <span class="svc-tag">Project 01</span>
+        </div>
+        <div class="svc-card">
+          <div class="svc-num">03</div>
+          <div class="svc-title">Site‑to‑Site VPN</div>
+          <p>IPsec tunnels between independent sites, with routing that prefers the tunnel and falls back to a blackhole route if it drops.</p>
+          <span class="svc-tag">Project 01</span>
+        </div>
+        <div class="svc-card">
+          <div class="svc-num">04</div>
+          <div class="svc-title">SD‑WAN</div>
+          <p>Multi‑WAN edges grouped into a single zone, so outbound traffic keeps moving even if one link degrades.</p>
+          <span class="svc-tag">Project 01</span>
+        </div>
+        <div class="svc-card">
+          <div class="svc-num">05</div>
+          <div class="svc-title">Network Segmentation</div>
+          <p>Zone‑based design — LAN, DMZ, WAN — with firewall policy controlling what can reach what.</p>
+          <span class="svc-tag">Project 02</span>
+        </div>
+        <div class="svc-card">
+          <div class="svc-num">06</div>
+          <div class="svc-title">Verification &amp; Testing</div>
+          <p>Every path is confirmed from the CLI — sourced pings, tunnel status, session counters — before it's called done.</p>
+          <span class="svc-tag">Project 01 · 02</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="education">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">Education &amp; Training</div>
+        <h2 class="h2">Currently building the fundamentals</h2>
+        <p>Second‑year Computer Science &amp; AI student, with applied network‑security practice and two completed Python courses alongside coursework.</p>
+      </div>
+      <div class="edu-grid reveal">
+        <div class="edu-card">
+          <div class="edu-photo"><img src="assets/university.jpg" alt="South Valley National University main building"></div>
+          <div class="edu-body">
+            <div class="edu-kicker">Entering Year 3</div>
+            <div class="edu-title">South Valley National University</div>
+            <div class="edu-sub">Faculty of Computer Science &amp; Artificial Intelligence — CS &amp; IT</div>
+            <p class="edu-desc">Completed the second year and moving into the third. Coursework in programming, algorithms, and computer networks runs alongside the independent FortiGate work shown on this page.</p>
+          </div>
+        </div>
+        <div class="edu-card">
+          <div class="edu-photo"><img src="assets/nti.jpg" alt="National Telecommunication Institute building"></div>
+          <div class="edu-body">
+            <div class="edu-kicker">NTI · 2025</div>
+            <div class="edu-title">National Telecommunication Institute</div>
+            <div class="edu-sub">FortiOS Administrator — Network Security, 60‑hour technical track</div>
+            <p class="edu-desc">Official Fortinet Academy curriculum covering firewall policies, the Security Fabric, user authentication, and security profiles — IPS, antivirus, web filtering, and application control — plus IPsec VPN, SD‑WAN, and HA. The two FortiGate projects on this page are the practical output of that track, built toward the <b style="color:var(--text);font-weight:600;">NSE4 FortiOS Administrator</b> certification path (exam NSE4_FGT_AD‑7.6). Alongside it, completed two Microsoft‑backed Python courses under a Ministry of Communications &amp; Information Technology digital‑skills program.</p>
+            <div class="cert-row">
+              <button class="cert-chip" data-full="assets/cert-python-intro.png" data-cap="Introduction to Programming Using Python — Sep 14–23, 2025">
+                <img src="assets/cert-python-intro.png" alt="Certificate: Introduction to Programming Using Python">
+                <span>Intro to Python<br><i>Sep 14–23, 2025</i></span>
+              </button>
+              <button class="cert-chip" data-full="assets/cert-python-intermediate.png" data-cap="Python Programming Language — Intermediate — Sep 25–Oct 2, 2025">
+                <img src="assets/cert-python-intermediate.png" alt="Certificate: Python Programming Language, Intermediate level">
+                <span>Python — Intermediate<br><i>Sep 25–Oct 2, 2025</i></span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PROJECT 1 ============ -->
+  <section id="project-vpn">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">Project 01</div>
+        <h2 class="h2">HA Cluster ↔ SD‑WAN Site‑to‑Site VPN</h2>
+        <p>Two independent FortiGate deployments, built and validated as a single connected system: an active‑passive HA pair at Site P1, and a dual‑WAN SD‑WAN edge at Site P2, joined by an IPsec tunnel and reachable subnet‑to‑subnet.</p>
+      </div>
+
+      <div class="case reveal">
+        <div class="case-header">
+          <div class="case-kicker">Architecture</div>
+          <div class="case-title">Site P1 (HA) — IPsec — Site P2 (SD‑WAN)</div>
+          <p class="case-desc">P1 runs two FortiGate VM64 units in an HA cluster (priority 250, both synchronized) fronting the 192.168.10.0/24 LAN. P2 runs a single FortiGate with two WAN links bonded into an SD‑WAN virtual‑wan‑link, fronting the 192.168.20.0/24 LAN. A site‑to‑site IPsec tunnel connects the two, with static routes on both sides preferring the tunnel and falling back to a blackhole route so traffic never leaks out to the internet if the VPN drops.</p>
+        </div>
+        <div class="diagram">
+          <svg viewBox="0 0 1000 220" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M0 0L10 5L0 10z" fill="#34d399"/>
+              </marker>
+            </defs>
+            <!-- P1 HA pair -->
+            <g font-family="IBM Plex Mono, monospace">
+              <rect x="30" y="55" width="150" height="46" rx="2" fill="none" stroke="#232b35"/>
+              <rect x="30" y="112" width="150" height="46" rx="2" fill="none" stroke="#232b35"/>
+              <text x="105" y="83" text-anchor="middle" fill="#e9eef3" font-size="12">FGT‑P1 Primary</text>
+              <text x="105" y="140" text-anchor="middle" fill="#8b98a6" font-size="12">FGT‑P1 Secondary</text>
+              <rect x="15" y="45" width="180" height="123" rx="4" fill="none" stroke="#34d399" stroke-dasharray="3 4"/>
+              <text x="105" y="30" text-anchor="middle" fill="#34d399" font-size="11" letter-spacing="1">SITE P1 — HA</text>
+              <text x="105" y="195" text-anchor="middle" fill="#5a6672" font-size="11">LAN 192.168.10.0/24</text>
+
+              <!-- tunnel -->
+              <line x1="220" y1="107" x2="770" y2="107" stroke="#34d399" stroke-width="1.4" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+              <rect x="430" y="82" width="140" height="26" fill="#0f151b" stroke="#34d399"/>
+              <text x="500" y="99" text-anchor="middle" fill="#34d399" font-size="11">IPsec · UP</text>
+
+              <!-- P2 SDWAN -->
+              <rect x="800" y="55" width="170" height="46" rx="2" fill="none" stroke="#232b35"/>
+              <rect x="800" y="112" width="170" height="46" rx="2" fill="none" stroke="#232b35"/>
+              <text x="885" y="83" text-anchor="middle" fill="#e9eef3" font-size="12">WAN port1</text>
+              <text x="885" y="140" text-anchor="middle" fill="#8b98a6" font-size="12">WAN port2</text>
+              <rect x="785" y="45" width="200" height="123" rx="4" fill="none" stroke="#f2a93b" stroke-dasharray="3 4"/>
+              <text x="885" y="30" text-anchor="middle" fill="#f2a93b" font-size="11" letter-spacing="1">SITE P2 — SD‑WAN</text>
+              <text x="885" y="195" text-anchor="middle" fill="#5a6672" font-size="11">LAN 192.168.20.0/24</text>
+            </g>
+          </svg>
+        </div>
+
+        <div class="tabbar" role="tablist" aria-label="Site selector">
+          <button class="tab-btn active" data-tab="p1" role="tab" aria-selected="true"><span class="dot"></span> SITE P1 — HA CLUSTER</button>
+          <button class="tab-btn" data-tab="p2" role="tab" aria-selected="false"><span class="dot amber"></span> SITE P2 — SD‑WAN</button>
+        </div>
+
+        <div class="tab-panel" data-panel="p1">
+          <div class="tab-meta">
+            <span class="meta-pill">Role: <b>Primary / Secondary</b></span>
+            <span class="meta-pill">Priority: <b>250</b></span>
+            <span class="meta-pill">LAN: <b>192.168.10.0/24</b></span>
+            <span class="meta-pill">Tunnel: <b>vpn to p2 — Up</b></span>
+          </div>
+          <div class="gallery">
+            <figure class="shot" data-full="assets/p1-ha-dashboard.png" data-cap="HA status — both units synchronized">
+              <div class="frame"><img src="assets/p1-ha-dashboard.png" alt="FortiGate HA status page showing Primary and Secondary units synchronized"></div>
+              <figcaption class="cap"><div class="t">01 · HA Status</div><div class="d">Active‑passive HA pair, both synchronized at priority 250 — live session count and throughput per unit.</div></figcaption>
+            </figure>
+            <figure class="shot" data-full="assets/p1-interfaces.png" data-cap="Interface table — WAN, LAN and FortiLink">
+              <div class="frame"><img src="assets/p1-interfaces.png" alt="FortiGate interface table for site P1"></div>
+              <figcaption class="cap"><div class="t">02 · Interfaces</div><div class="d">port1 carries WAN/management (SSH, HTTPS, FMG‑Access); port3 terminates the internal 192.168.10.0/24 LAN.</div></figcaption>
+            </figure>
+            <figure class="shot" data-full="assets/p1-static-routes.png" data-cap="Static routes — default plus VPN with blackhole failsafe">
+              <div class="frame"><img src="assets/p1-static-routes.png" alt="FortiGate static route table for site P1"></div>
+              <figcaption class="cap"><div class="t">03 · Static Routing</div><div class="d">Default route out port1, a primary route through the tunnel, and a blackhole route so nothing leaks if the VPN drops.</div></figcaption>
+            </figure>
+            <figure class="shot" data-full="assets/p1-firewall-policy.png" data-cap="Firewall policy — LAN to internet and VPN traffic">
+              <div class="frame"><img src="assets/p1-firewall-policy.png" alt="FortiGate firewall policy table for site P1"></div>
+              <figcaption class="cap"><div class="t">04 · Firewall Policy</div><div class="d">LAN‑to‑internet plus dedicated inbound/outbound rules for the VPN interface, all under UTM inspection.</div></figcaption>
+            </figure>
+            <figure class="shot" data-full="assets/p1-ipsec-tunnels.png" data-cap="IPsec tunnel — up, bound to port1">
+              <div class="frame"><img src="assets/p1-ipsec-tunnels.png" alt="FortiGate IPsec tunnel status for site P1"></div>
+              <figcaption class="cap"><div class="t">05 · IPsec Tunnel</div><div class="d">Site‑to‑site tunnel "vpn to p2," bound to port1, status Up.</div></figcaption>
+            </figure>
+            <figure class="shot" data-full="assets/p1-cli-ping.png" data-cap="CLI verification — 0% packet loss across the tunnel">
+              <div class="frame"><img src="assets/p1-cli-ping.png" alt="FortiGate CLI ping test from site P1 to site P2"></div>
+              <figcaption class="cap"><div class="t">06 · CLI Verification</div><div class="d">Sourced ping from the P1 LAN to the P2 LAN (192.168.20.1) — 5/5 packets, 0% loss, 1.6 ms average.</div></figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <div class="tab-panel" data-panel="p2" style="display:none;">
+          <div class="tab-meta">
+            <span class="meta-pill">WAN links: <b>port1 + port2</b></span>
+            <span class="meta-pill">SD‑WAN zone: <b>virtual‑wan‑link</b></span>
+            <span class="meta-pill">LAN: <b>192.168.20.0/24</b></span>
+            <span class="meta-pill">Tunnel: <b>vpn to p1 — Up</b></span>
+          </div>
+          <div class="gallery">
+            <figure class="shot" data-full="assets/p2-interfaces.png" data-cap="Interface table — dual WAN and LAN">
+              <div class="frame"><img src="assets/p2-interfaces.png" alt="FortiGate interface table for site P2"></div>
+              <figcaption class="cap"><div class="t">01 · Interfaces</div><div class="d">Two independent WAN links (port1, port2) plus the internal 192.168.20.0/24 LAN on port3.</div></figcaption>
+            </figure>
+            <figure class="shot" data-full="assets/p2-sdwan-zones.png" data-cap="SD‑WAN zone — both links load‑balanced">
+              <div class="frame"><img src="assets/p2-sdwan-zones.png" alt="FortiGate SD-WAN zone configuration for site P2"></div>
+              <figcaption class="cap"><div class="t">02 · SD‑WAN Zone</div><div class="d">Both WAN ports grouped into the virtual‑wan‑link at equal cost, with live download/upload throughput per member.</div></figcaption>
+            </figure>
+            <figure class="shot" data-full="assets/p2-static-routes.png" data-cap="Static routes — SD-WAN default and VPN failsafe">
+              <div class="frame"><img src="assets/p2-static-routes.png" alt="FortiGate static route table for site P2"></div>
+              <figcaption class="cap"><div class="t">03 · Static Routing</div><div class="d">Default route rides the SD‑WAN zone; the route to P1 gets the same primary‑plus‑blackhole failsafe pattern as P1.</div></figcaption>
+            </figure>
+            <figure class="shot" data-full="assets/p2-firewall-policy.png" data-cap="Firewall policy — LAN to SD-WAN and VPN traffic">
+              <div class="frame"><img src="assets/p2-firewall-policy.png" alt="FortiGate firewall policy table for site P2"></div>
+              <figcaption class="cap"><div class="t">04 · Firewall Policy</div><div class="d">LAN‑to‑SD‑WAN policy for general egress, mirrored by inbound/outbound rules for the tunnel back to P1.</div></figcaption>
+            </figure>
+            <figure class="shot" data-full="assets/p2-ipsec-tunnels.png" data-cap="IPsec tunnel — up, bound to port1">
+              <div class="frame"><img src="assets/p2-ipsec-tunnels.png" alt="FortiGate IPsec tunnel status for site P2"></div>
+              <figcaption class="cap"><div class="t">05 · IPsec Tunnel</div><div class="d">Site‑to‑site tunnel "vpn to p1," bound to port1, status Up.</div></figcaption>
+            </figure>
+            <figure class="shot" data-full="assets/p2-cli-ping.png" data-cap="CLI verification — reverse path, 0% packet loss">
+              <div class="frame"><img src="assets/p2-cli-ping.png" alt="FortiGate CLI ping test from site P2 to site P1"></div>
+              <figcaption class="cap"><div class="t">06 · CLI Verification</div><div class="d">Sourced ping from the P2 LAN to the P1 LAN (192.168.10.1) — 5/5 packets, 0% loss, 1.2 ms average, confirming bidirectional reachability.</div></figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PROJECT 2 ============ -->
+  <section id="project-dmz">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">Project 02</div>
+        <h2 class="h2">DMZ Segmentation</h2>
+        <p>A single FortiGate split into three security zones, so a compromised public‑facing host in the DMZ can never pivot into the internal LAN.</p>
+      </div>
+
+      <div class="case reveal">
+        <div class="case-header">
+          <div class="case-kicker">Architecture</div>
+          <div class="case-title">WAN — LAN — DMZ, one firewall, three zones</div>
+          <p class="case-desc">port1 faces the WAN, port2 hosts the internal LAN (192.168.10.0/24), and port3 is a dedicated DMZ (192.168.20.0/24) for exposed services. Policy does the isolating: DMZ‑to‑LAN traffic is explicitly denied, LAN‑to‑DMZ and LAN‑to‑WAN are permitted, and the implicit deny rule closes everything not named.</p>
+        </div>
+        <div class="diagram">
+          <svg viewBox="0 0 1000 200" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <marker id="arrowOk" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M0 0L10 5L0 10z" fill="#34d399"/>
+              </marker>
+              <marker id="arrowNo" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M0 0L10 5L0 10z" fill="#e0645a"/>
+              </marker>
+            </defs>
+            <g font-family="IBM Plex Mono, monospace" font-size="12">
+              <rect x="30" y="70" width="170" height="60" rx="2" fill="none" stroke="#232b35"/>
+              <text x="115" y="95" text-anchor="middle" fill="#e9eef3">WAN</text>
+              <text x="115" y="113" text-anchor="middle" fill="#5a6672" font-size="10">port1</text>
+
+              <rect x="415" y="20" width="170" height="60" rx="2" fill="none" stroke="#232b35"/>
+              <text x="500" y="45" text-anchor="middle" fill="#e9eef3">LAN</text>
+              <text x="500" y="63" text-anchor="middle" fill="#5a6672" font-size="10">port2 · 192.168.10.0/24</text>
+
+              <rect x="415" y="120" width="170" height="60" rx="2" fill="none" stroke="#232b35"/>
+              <text x="500" y="145" text-anchor="middle" fill="#e9eef3">DMZ</text>
+              <text x="500" y="163" text-anchor="middle" fill="#5a6672" font-size="10">port3 · 192.168.20.0/24</text>
+
+              <line x1="200" y1="100" x2="415" y2="50" stroke="#34d399" marker-end="url(#arrowOk)"/>
+              <line x1="415" y1="70" x2="200" y2="105" stroke="#34d399" marker-end="url(#arrowOk)"/>
+
+              <line x1="500" y1="80" x2="500" y2="120" stroke="#34d399" marker-end="url(#arrowOk)"/>
+              <text x="565" y="103" fill="#34d399" font-size="10">allow</text>
+
+              <line x1="450" y1="120" x2="450" y2="80" stroke="#e0645a" marker-end="url(#arrowNo)"/>
+              <text x="330" y="103" fill="#e0645a" font-size="10">deny</text>
+
+              <rect x="800" y="20" width="170" height="160" rx="2" fill="none" stroke="#232b35" stroke-dasharray="3 4"/>
+              <text x="885" y="45" text-anchor="middle" fill="#f2a93b" font-size="11">POLICY ORDER</text>
+              <text x="820" y="72" fill="#8b98a6" font-size="10">1  dmz → lan</text>
+              <text x="925" y="72" fill="#e0645a" font-size="10">DENY</text>
+              <text x="820" y="94" fill="#8b98a6" font-size="10">2  lan → dmz</text>
+              <text x="925" y="94" fill="#34d399" font-size="10">ACCEPT</text>
+              <text x="820" y="116" fill="#8b98a6" font-size="10">3  lan → wan</text>
+              <text x="925" y="116" fill="#34d399" font-size="10">ACCEPT</text>
+              <text x="820" y="138" fill="#8b98a6" font-size="10">4  any → any</text>
+              <text x="925" y="138" fill="#e0645a" font-size="10">DENY</text>
+              <text x="820" y="160" fill="#5a6672" font-size="9">implicit</text>
+            </g>
+          </svg>
+        </div>
+
+        <div class="tab-meta" style="padding-top:26px;">
+          <span class="meta-pill">Zones: <b>WAN / LAN / DMZ</b></span>
+          <span class="meta-pill">DMZ → LAN: <b>Denied</b></span>
+          <span class="meta-pill">LAN → DMZ: <b>Accepted</b></span>
+        </div>
+        <div class="gallery">
+          <figure class="shot" data-full="assets/dmz-interfaces.png" data-cap="Three-legged interface layout">
+            <div class="frame"><img src="assets/dmz-interfaces.png" alt="FortiGate interface table showing DMZ, LAN and WAN zones"></div>
+            <figcaption class="cap"><div class="t">01 · Interfaces</div><div class="d">Dedicated DMZ (port3), internal LAN (port2), and WAN (port1) on a single FortiGate — each its own subnet.</div></figcaption>
+          </figure>
+          <figure class="shot" data-full="assets/dmz-firewall-policy.png" data-cap="Firewall policy enforcing the isolation">
+            <div class="frame"><img src="assets/dmz-firewall-policy.png" alt="FortiGate firewall policy table enforcing DMZ isolation"></div>
+            <figcaption class="cap"><div class="t">02 · Firewall Policy</div><div class="d">DMZ‑to‑LAN explicitly denied, LAN‑to‑DMZ and LAN‑to‑WAN permitted, implicit deny closes everything else.</div></figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer id="contact">
+    <div class="wrap">
+      <div class="footer-grid">
+        <div>
+          <div class="eyebrow">Get in touch</div>
+          <div class="footer-title">Open to network &amp; security<span class="up"> engineering</span> work.</div>
+        </div>
+        <div class="footer-contacts">
+          <a class="chip primary" href="mailto:Hassanismailtheemperor@gmail.com">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16v16H4z"/><path d="M22 6l-10 7L2 6"/></svg>
+            Hassanismailtheemperor@gmail.com
+          </a>
+          <a class="chip" href="tel:+201032702926">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .3 2 .6 2.9a2 2 0 0 1-.5 2.1L8 10a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.9.5 2.9.6a2 2 0 0 1 1.7 2z"/></svg>
+            +20 103 270 2926
+          </a>
+          <a class="chip" href="https://www.linkedin.com/in/hassan-ismael-hassan-mohamed-1a014b3a3" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            linkedin.com/in/hassan-ismael-hassan-mohamed
+          </a>
+          <div class="chip" style="cursor:default;">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 12-9 12s-9-5-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            Qena, Egypt
+          </div>
+          <a class="chip" href="Hassan-Ismail-Portfolio.pdf" download>
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M4 20h16"/></svg>
+            Download PDF
+          </a>
+        </div>
+      </div>
+      <div class="foot-line">
+        <span>© 2026 Hassan Ismail</span>
+        <span>FortiGate VM64 · FortiOS 7.0.15</span>
+      </div>
+    </div>
+  </footer>
+
+</main>
+
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose">CLOSE ✕</button>
+  <img id="lightboxImg" src="" alt="Enlarged screenshot">
+  <div class="lightbox-cap" id="lightboxCap"></div>
+</div>
+
+<script>
+  // tabs
+  document.querySelectorAll('.tabbar').forEach(bar=>{
+    const buttons = bar.querySelectorAll('.tab-btn');
+    const case_ = bar.closest('.case');
+    buttons.forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        buttons.forEach(b=>{b.classList.remove('active'); b.setAttribute('aria-selected','false');});
+        btn.classList.add('active'); btn.setAttribute('aria-selected','true');
+        const key = btn.dataset.tab;
+        case_.querySelectorAll('.tab-panel').forEach(p=>{
+          p.style.display = (p.dataset.panel === key) ? '' : 'none';
+        });
+      });
+    });
+  });
+
+  // lightbox
+  const lb = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lightboxImg');
+  const lbCap = document.getElementById('lightboxCap');
+  document.querySelectorAll('.shot, .cert-chip').forEach(shot=>{
+    shot.addEventListener('click', ()=>{
+      lbImg.src = shot.dataset.full;
+      lbCap.textContent = shot.dataset.cap || '';
+      lb.classList.add('open');
+    });
+  });
+  document.getElementById('lightboxClose').addEventListener('click', ()=> lb.classList.remove('open'));
+  lb.addEventListener('click', (e)=>{ if(e.target === lb) lb.classList.remove('open'); });
+  document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') lb.classList.remove('open'); });
+
+  // scroll reveal
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
+  }, {threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+
+</body>
+</html>
