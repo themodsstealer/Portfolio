@@ -443,6 +443,41 @@
   .skill-tag .dot{width:5px;height:5px;flex:none;}
   @media (max-width:760px){ .skills-grid{grid-template-columns:1fr;} }
 
+  /* ---------- competitive programming ---------- */
+  .contest-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+  }
+  .contest-card{
+    background:var(--panel);
+    padding:26px 26px 24px;
+    display:flex;flex-direction:column;
+  }
+  .contest-kicker{
+    font-family:var(--mono);font-size:11px;color:var(--text-faint);
+    letter-spacing:.06em;margin-bottom:14px;
+  }
+  .contest-name{
+    font-family:var(--display);font-size:16px;font-weight:600;color:var(--text);
+    line-height:1.35;margin-bottom:14px;
+  }
+  .contest-result{
+    font-family:var(--mono);font-size:15px;color:var(--up);font-weight:500;
+    margin-bottom:18px;
+  }
+  .contest-thumb{
+    appearance:none;border:1px solid var(--line);background:#fff;
+    padding:0;cursor:zoom-in;border-radius:2px;overflow:hidden;
+    aspect-ratio:2339/1653;margin-top:auto;
+    transition:border-color .15s ease;
+  }
+  .contest-thumb:hover{border-color:var(--up);}
+  .contest-thumb img{width:100%;height:100%;object-fit:contain;display:block;}
+  @media (max-width:860px){ .contest-grid{grid-template-columns:1fr;} }
+
   /* ---------- footer / contact ---------- */
   footer{
     border-top:1px solid var(--line);
@@ -510,6 +545,7 @@
       <a href="#skills">Skills</a>
       <a href="#services">Services</a>
       <a href="#education">Education</a>
+      <a href="#contests">Contests</a>
       <a href="#contact">Contact</a>
       <a class="nav-download" href="Hassan-Ismail-Portfolio.pdf" download>
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M4 20h16"/></svg>
@@ -719,6 +755,59 @@
               </button>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contests">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">Competitive Programming</div>
+        <h2 class="h2">C++ contest record</h2>
+        <p>Alongside the security work on this page, I compete in C++ with South Valley National University's ECPC/ICPC team.</p>
+      </div>
+
+      <div class="contest-grid reveal">
+        <div class="contest-card">
+          <div class="contest-kicker">APR 2025 · INDIVIDUAL</div>
+          <div class="contest-name">ICPC ACPC Kickoff<br>Online Individual Contest</div>
+          <div class="contest-result">Honorable Mention</div>
+          <button class="contest-thumb" data-full="assets/cert-acpc-kickoff.png" data-cap="ICPC ACPC Kickoff Online Individual Contest — 25–26 April 2025 — Honorable Mention">
+            <img src="assets/cert-acpc-kickoff.png" alt="Certificate: ICPC ACPC Kickoff Online Individual Contest, Honorable Mention">
+          </button>
+        </div>
+        <div class="contest-card">
+          <div class="contest-kicker">AUG 2025 · INDIVIDUAL</div>
+          <div class="contest-name">ECPC Qualifications<br>Collegiate Programming Contest, Day 8</div>
+          <div class="contest-result">94th Place</div>
+          <button class="contest-thumb" data-full="assets/cert-ecpc-2025.png" data-cap="ECPC Qualifications Collegiate Programming Contest, Day 8 — 7 August 2025 — 94th Place">
+            <img src="assets/cert-ecpc-2025.png" alt="Certificate: ECPC Qualifications Day 8 2025, 94th Place, individual">
+          </button>
+        </div>
+        <div class="contest-card">
+          <div class="contest-kicker">AUG 2025 · TEAM</div>
+          <div class="contest-name">ECPC Qualifications<br>Collegiate Programming Contest, Day 8</div>
+          <div class="contest-result">94th Place</div>
+          <button class="contest-thumb" data-full="assets/cert-ecpc-2025-team.png" data-cap="ECPC Qualifications Collegiate Programming Contest, Day 8 — 7 August 2025 — 94th Place — Team">
+            <img src="assets/cert-ecpc-2025-team.png" alt="Certificate: ECPC Qualifications Day 8 2025, 94th Place, team">
+          </button>
+        </div>
+        <div class="contest-card">
+          <div class="contest-kicker">AUG 2026 · INDIVIDUAL</div>
+          <div class="contest-name">ECPC Qualifications<br>Collegiate Programming Contest, Day 8</div>
+          <div class="contest-result">93rd Place</div>
+          <button class="contest-thumb" data-full="assets/cert-ecpc-2026.png" data-cap="ECPC Qualifications Collegiate Programming Contest, Day 8 — 20 August 2026 — 93rd Place">
+            <img src="assets/cert-ecpc-2026.png" alt="Certificate: ECPC Qualifications Day 8 2026, 93rd Place, individual">
+          </button>
+        </div>
+        <div class="contest-card">
+          <div class="contest-kicker">AUG 2026 · TEAM</div>
+          <div class="contest-name">ECPC Qualifications<br>Collegiate Programming Contest, Day 8</div>
+          <div class="contest-result">93rd Place</div>
+          <button class="contest-thumb" data-full="assets/cert-ecpc-2026-team.png" data-cap="ECPC Qualifications Collegiate Programming Contest, Day 8 — 20 August 2026 — 93rd Place — Team">
+            <img src="assets/cert-ecpc-2026-team.png" alt="Certificate: ECPC Qualifications Day 8 2026, 93rd Place, team">
+          </button>
         </div>
       </div>
     </div>
@@ -998,7 +1087,7 @@
   const lb = document.getElementById('lightbox');
   const lbImg = document.getElementById('lightboxImg');
   const lbCap = document.getElementById('lightboxCap');
-  document.querySelectorAll('.shot, .cert-chip').forEach(shot=>{
+  document.querySelectorAll('.shot, .cert-chip, .contest-thumb').forEach(shot=>{
     shot.addEventListener('click', ()=>{
       lbImg.src = shot.dataset.full;
       lbCap.textContent = shot.dataset.cap || '';
