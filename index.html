@@ -267,15 +267,6 @@
   .case-title{font-family:var(--display);font-size:clamp(24px,2.6vw,32px);font-weight:600;color:var(--text);letter-spacing:-.01em;}
   .case-desc{color:var(--text-dim);margin-top:14px;max-width:74ch;font-size:15px;}
 
-  .diagram{
-    padding:34px 40px;
-    border-bottom:1px solid var(--line);
-    background:
-      linear-gradient(var(--line-soft) 1px, transparent 1px) 0 0 / 100% 24px,
-      var(--panel-raised);
-  }
-  .diagram svg{width:100%;height:auto;display:block;}
-
   /* tabs */
   .tabbar{
     display:flex;gap:0;
@@ -342,7 +333,6 @@
   @media (max-width:860px){
     .gallery{grid-template-columns:1fr 1fr;padding-left:22px;padding-right:22px;}
     .tabbar,.tab-meta,.case-header{padding-left:22px;padding-right:22px;}
-    .diagram{padding-left:22px;padding-right:22px;}
   }
   @media (max-width:600px){
     .gallery{grid-template-columns:1fr;}
@@ -541,15 +531,19 @@
   <div class="navbar">
     <div class="brand"><span class="dot"></span> HASSAN ISMAIL — SEC/ENG</div>
     <nav class="links">
-      <a href="#work">Work</a>
       <a href="#skills">Skills</a>
-      <a href="#services">Services</a>
       <a href="#education">Education</a>
       <a href="#contests">Contests</a>
+      <a href="#services">Services</a>
+      <a href="#work">Work</a>
       <a href="#contact">Contact</a>
       <a class="nav-download" href="Hassan-Ismail-Portfolio.pdf" download>
         <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M4 20h16"/></svg>
-        PDF
+        Portfolio PDF
+      </a>
+      <a class="nav-download" href="Hassan-Ismail-Resume.docx" download>
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M4 20h16"/></svg>
+        Resume
       </a>
     </nav>
   </div>
@@ -563,8 +557,8 @@
         <div>
           <div class="eyebrow">Network &amp; Security Engineer</div>
           <h1 class="name">Hassan<br>Ismail<span>.</span></h1>
-          <div class="role">Firewalls, routing &amp; VPN — built and verified on <b>FortiGate</b>.</div>
-          <p class="lede">I design and harden network infrastructure end to end — high‑availability firewall clusters, SD‑WAN edges, site‑to‑site IPsec tunnels, and segmented DMZ architectures — then prove every path with a policy trace and a CLI ping.</p>
+          <div class="role">CS &amp; AI Student, South Valley National University</div>
+          <p class="lede">Working across two tracks: competitive programming in C++ (ECPC/ICPC) and network security. On the security side, I design and harden network infrastructure — firewall clusters, SD‑WAN edges, site‑to‑site IPsec tunnels, and segmented DMZ architectures on <b style="color:var(--signal);">FortiGate</b> — then prove every path with a policy trace and a CLI ping.</p>
           <p class="principle">"Failure is a milestone for success." <b>— a line I build by.</b></p>
           <div class="contact-row">
             <a class="chip primary" href="mailto:Hassanismailtheemperor@gmail.com">
@@ -585,7 +579,11 @@
             </div>
             <a class="chip" href="Hassan-Ismail-Portfolio.pdf" download>
               <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M4 20h16"/></svg>
-              Download PDF
+              Download Portfolio PDF
+            </a>
+            <a class="chip" href="Hassan-Ismail-Resume.docx" download>
+              <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M4 20h16"/></svg>
+              Download Resume
             </a>
           </div>
         </div>
@@ -601,42 +599,6 @@
         </div>
       </div>
     </div>
-
-    <div class="status-strip">
-      <div class="item"><span class="dot"></span> HA CLUSTER <b>SYNCHRONIZED</b></div>
-      <div class="item"><span class="dot blue"></span> IPSEC TUNNEL <b>UP · 0% LOSS</b></div>
-      <div class="item"><span class="dot amber"></span> SD-WAN <b>DUAL-WAN ACTIVE</b></div>
-      <div class="item"><span class="dot"></span> DMZ <b>SEGMENTED</b></div>
-    </div>
-  </section>
-
-  <section id="work" class="tight">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <div class="eyebrow">Selected Work</div>
-        <h2 class="h2">Two builds, verified end to end</h2>
-        <p>Every policy shown here was traced from interface to route to rule, then confirmed live from the CLI.</p>
-      </div>
-
-      <div class="index-list reveal">
-        <a class="index-row" href="#project-vpn">
-          <span class="index-num">01</span>
-          <span>
-            <span class="index-title">HA Cluster ↔ SD‑WAN Site‑to‑Site VPN</span>
-            <span class="index-sub">Two independent FortiGate sites joined over an encrypted tunnel</span>
-          </span>
-          <span class="index-tags"><span>HA</span><span>SD-WAN</span><span>IPsec</span><span>Routing</span></span>
-        </a>
-        <a class="index-row" href="#project-dmz">
-          <span class="index-num">02</span>
-          <span>
-            <span class="index-title">DMZ Segmentation</span>
-            <span class="index-sub">Three‑legged firewall isolating public‑facing services from the LAN</span>
-          </span>
-          <span class="index-tags"><span>DMZ</span><span>Policy</span><span>Zoning</span></span>
-        </a>
-      </div>
-    </div>
   </section>
 
   <section id="skills" class="tight">
@@ -644,7 +606,7 @@
       <div class="section-head reveal">
         <div class="eyebrow">Skills &amp; Tools</div>
         <h2 class="h2">What's actually behind the work</h2>
-        <p>Every item here is exercised somewhere in the two builds on this page.</p>
+        <p>Trained hands-on through NTI's FortiOS Administrator program and independent practice — not just a keyword list.</p>
       </div>
       <div class="skills-grid reveal">
         <div class="skills-col">
@@ -671,55 +633,6 @@
       </div>
     </div>
   </section>
-
-  <section id="services" class="tight">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <div class="eyebrow">What I Do</div>
-        <h2 class="h2">Services</h2>
-        <p>Scope drawn directly from the two builds on this page.</p>
-      </div>
-      <div class="svc-grid reveal">
-        <div class="svc-card">
-          <div class="svc-num">01</div>
-          <div class="svc-title">Firewall &amp; Policy Design</div>
-          <p>Rule sets built around least privilege — explicit deny where it matters, scoped ACCEPT rules everywhere else, all under UTM inspection.</p>
-          <span class="svc-tag">Project 01 · 02</span>
-        </div>
-        <div class="svc-card">
-          <div class="svc-num">02</div>
-          <div class="svc-title">High Availability</div>
-          <p>Active‑passive FortiGate clustering with unit priority and synchronization, so a single hardware failure doesn't take the network down.</p>
-          <span class="svc-tag">Project 01</span>
-        </div>
-        <div class="svc-card">
-          <div class="svc-num">03</div>
-          <div class="svc-title">Site‑to‑Site VPN</div>
-          <p>IPsec tunnels between independent sites, with routing that prefers the tunnel and falls back to a blackhole route if it drops.</p>
-          <span class="svc-tag">Project 01</span>
-        </div>
-        <div class="svc-card">
-          <div class="svc-num">04</div>
-          <div class="svc-title">SD‑WAN</div>
-          <p>Multi‑WAN edges grouped into a single zone, so outbound traffic keeps moving even if one link degrades.</p>
-          <span class="svc-tag">Project 01</span>
-        </div>
-        <div class="svc-card">
-          <div class="svc-num">05</div>
-          <div class="svc-title">Network Segmentation</div>
-          <p>Zone‑based design — LAN, DMZ, WAN — with firewall policy controlling what can reach what.</p>
-          <span class="svc-tag">Project 02</span>
-        </div>
-        <div class="svc-card">
-          <div class="svc-num">06</div>
-          <div class="svc-title">Verification &amp; Testing</div>
-          <p>Every path is confirmed from the CLI — sourced pings, tunnel status, session counters — before it's called done.</p>
-          <span class="svc-tag">Project 01 · 02</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <section id="education">
     <div class="wrap">
       <div class="section-head reveal">
@@ -759,13 +672,12 @@
       </div>
     </div>
   </section>
-
   <section id="contests">
     <div class="wrap">
       <div class="section-head reveal">
         <div class="eyebrow">Competitive Programming</div>
         <h2 class="h2">C++ contest record</h2>
-        <p>Alongside the security work on this page, I compete in C++ with South Valley National University's ECPC/ICPC team.</p>
+        <p>Alongside network security, I compete in C++ with South Valley National University's ECPC/ICPC team.</p>
       </div>
 
       <div class="contest-grid reveal">
@@ -812,7 +724,81 @@
       </div>
     </div>
   </section>
+  <section id="services" class="tight">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">What I Do</div>
+        <h2 class="h2">Services</h2>
+        <p>What I can help with, grounded in FortiOS training and hands-on practice.</p>
+      </div>
+      <div class="svc-grid reveal">
+        <div class="svc-card">
+          <div class="svc-num">01</div>
+          <div class="svc-title">Firewall &amp; Policy Design</div>
+          <p>Rule sets built around least privilege — explicit deny where it matters, scoped ACCEPT rules everywhere else, all under UTM inspection.</p>
+          <span class="svc-tag">Project 01 · 02</span>
+        </div>
+        <div class="svc-card">
+          <div class="svc-num">02</div>
+          <div class="svc-title">High Availability</div>
+          <p>Active‑passive FortiGate clustering with unit priority and synchronization, so a single hardware failure doesn't take the network down.</p>
+          <span class="svc-tag">Project 01</span>
+        </div>
+        <div class="svc-card">
+          <div class="svc-num">03</div>
+          <div class="svc-title">Site‑to‑Site VPN</div>
+          <p>IPsec tunnels between independent sites, with routing that prefers the tunnel and falls back to a blackhole route if it drops.</p>
+          <span class="svc-tag">Project 01</span>
+        </div>
+        <div class="svc-card">
+          <div class="svc-num">04</div>
+          <div class="svc-title">SD‑WAN</div>
+          <p>Multi‑WAN edges grouped into a single zone, so outbound traffic keeps moving even if one link degrades.</p>
+          <span class="svc-tag">Project 01</span>
+        </div>
+        <div class="svc-card">
+          <div class="svc-num">05</div>
+          <div class="svc-title">Network Segmentation</div>
+          <p>Zone‑based design — LAN, DMZ, WAN — with firewall policy controlling what can reach what.</p>
+          <span class="svc-tag">Project 02</span>
+        </div>
+        <div class="svc-card">
+          <div class="svc-num">06</div>
+          <div class="svc-title">Verification &amp; Testing</div>
+          <p>Every path is confirmed from the CLI — sourced pings, tunnel status, session counters — before it's called done.</p>
+          <span class="svc-tag">Project 01 · 02</span>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="work" class="tight">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">Project Walkthroughs</div>
+        <h2 class="h2">A closer look at two builds</h2>
+        <p>The FortiOS training above, applied — each policy traced from interface to route to rule and confirmed live from the CLI.</p>
+      </div>
 
+      <div class="index-list reveal">
+        <a class="index-row" href="#project-vpn">
+          <span class="index-num">01</span>
+          <span>
+            <span class="index-title">HA Cluster ↔ SD‑WAN Site‑to‑Site VPN</span>
+            <span class="index-sub">Two independent FortiGate sites joined over an encrypted tunnel</span>
+          </span>
+          <span class="index-tags"><span>HA</span><span>SD-WAN</span><span>IPsec</span><span>Routing</span></span>
+        </a>
+        <a class="index-row" href="#project-dmz">
+          <span class="index-num">02</span>
+          <span>
+            <span class="index-title">DMZ Segmentation</span>
+            <span class="index-sub">Three‑legged firewall isolating public‑facing services from the LAN</span>
+          </span>
+          <span class="index-tags"><span>DMZ</span><span>Policy</span><span>Zoning</span></span>
+        </a>
+      </div>
+    </div>
+  </section>
   <!-- ============ PROJECT 1 ============ -->
   <section id="project-vpn">
     <div class="wrap">
@@ -827,39 +813,6 @@
           <div class="case-kicker">Architecture</div>
           <div class="case-title">Site P1 (HA) — IPsec — Site P2 (SD‑WAN)</div>
           <p class="case-desc">P1 runs two FortiGate VM64 units in an HA cluster (priority 250, both synchronized) fronting the 192.168.10.0/24 LAN. P2 runs a single FortiGate with two WAN links bonded into an SD‑WAN virtual‑wan‑link, fronting the 192.168.20.0/24 LAN. A site‑to‑site IPsec tunnel connects the two, with static routes on both sides preferring the tunnel and falling back to a blackhole route so traffic never leaks out to the internet if the VPN drops.</p>
-        </div>
-        <div class="diagram">
-          <svg viewBox="0 0 1000 220" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                <path d="M0 0L10 5L0 10z" fill="#34d399"/>
-              </marker>
-            </defs>
-            <!-- P1 HA pair -->
-            <g font-family="IBM Plex Mono, monospace">
-              <rect x="30" y="55" width="150" height="46" rx="2" fill="none" stroke="#232b35"/>
-              <rect x="30" y="112" width="150" height="46" rx="2" fill="none" stroke="#232b35"/>
-              <text x="105" y="83" text-anchor="middle" fill="#e9eef3" font-size="12">FGT‑P1 Primary</text>
-              <text x="105" y="140" text-anchor="middle" fill="#8b98a6" font-size="12">FGT‑P1 Secondary</text>
-              <rect x="15" y="45" width="180" height="123" rx="4" fill="none" stroke="#34d399" stroke-dasharray="3 4"/>
-              <text x="105" y="30" text-anchor="middle" fill="#34d399" font-size="11" letter-spacing="1">SITE P1 — HA</text>
-              <text x="105" y="195" text-anchor="middle" fill="#5a6672" font-size="11">LAN 192.168.10.0/24</text>
-
-              <!-- tunnel -->
-              <line x1="220" y1="107" x2="770" y2="107" stroke="#34d399" stroke-width="1.4" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
-              <rect x="430" y="82" width="140" height="26" fill="#0f151b" stroke="#34d399"/>
-              <text x="500" y="99" text-anchor="middle" fill="#34d399" font-size="11">IPsec · UP</text>
-
-              <!-- P2 SDWAN -->
-              <rect x="800" y="55" width="170" height="46" rx="2" fill="none" stroke="#232b35"/>
-              <rect x="800" y="112" width="170" height="46" rx="2" fill="none" stroke="#232b35"/>
-              <text x="885" y="83" text-anchor="middle" fill="#e9eef3" font-size="12">WAN port1</text>
-              <text x="885" y="140" text-anchor="middle" fill="#8b98a6" font-size="12">WAN port2</text>
-              <rect x="785" y="45" width="200" height="123" rx="4" fill="none" stroke="#f2a93b" stroke-dasharray="3 4"/>
-              <text x="885" y="30" text-anchor="middle" fill="#f2a93b" font-size="11" letter-spacing="1">SITE P2 — SD‑WAN</text>
-              <text x="885" y="195" text-anchor="middle" fill="#5a6672" font-size="11">LAN 192.168.20.0/24</text>
-            </g>
-          </svg>
         </div>
 
         <div class="tabbar" role="tablist" aria-label="Site selector">
@@ -955,53 +908,6 @@
           <div class="case-title">WAN — LAN — DMZ, one firewall, three zones</div>
           <p class="case-desc">port1 faces the WAN, port2 hosts the internal LAN (192.168.10.0/24), and port3 is a dedicated DMZ (192.168.20.0/24) for exposed services. Policy does the isolating: DMZ‑to‑LAN traffic is explicitly denied, LAN‑to‑DMZ and LAN‑to‑WAN are permitted, and the implicit deny rule closes everything not named.</p>
         </div>
-        <div class="diagram">
-          <svg viewBox="0 0 1000 200" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <marker id="arrowOk" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                <path d="M0 0L10 5L0 10z" fill="#34d399"/>
-              </marker>
-              <marker id="arrowNo" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                <path d="M0 0L10 5L0 10z" fill="#e0645a"/>
-              </marker>
-            </defs>
-            <g font-family="IBM Plex Mono, monospace" font-size="12">
-              <rect x="30" y="70" width="170" height="60" rx="2" fill="none" stroke="#232b35"/>
-              <text x="115" y="95" text-anchor="middle" fill="#e9eef3">WAN</text>
-              <text x="115" y="113" text-anchor="middle" fill="#5a6672" font-size="10">port1</text>
-
-              <rect x="415" y="20" width="170" height="60" rx="2" fill="none" stroke="#232b35"/>
-              <text x="500" y="45" text-anchor="middle" fill="#e9eef3">LAN</text>
-              <text x="500" y="63" text-anchor="middle" fill="#5a6672" font-size="10">port2 · 192.168.10.0/24</text>
-
-              <rect x="415" y="120" width="170" height="60" rx="2" fill="none" stroke="#232b35"/>
-              <text x="500" y="145" text-anchor="middle" fill="#e9eef3">DMZ</text>
-              <text x="500" y="163" text-anchor="middle" fill="#5a6672" font-size="10">port3 · 192.168.20.0/24</text>
-
-              <line x1="200" y1="100" x2="415" y2="50" stroke="#34d399" marker-end="url(#arrowOk)"/>
-              <line x1="415" y1="70" x2="200" y2="105" stroke="#34d399" marker-end="url(#arrowOk)"/>
-
-              <line x1="500" y1="80" x2="500" y2="120" stroke="#34d399" marker-end="url(#arrowOk)"/>
-              <text x="565" y="103" fill="#34d399" font-size="10">allow</text>
-
-              <line x1="450" y1="120" x2="450" y2="80" stroke="#e0645a" marker-end="url(#arrowNo)"/>
-              <text x="330" y="103" fill="#e0645a" font-size="10">deny</text>
-
-              <rect x="800" y="20" width="170" height="160" rx="2" fill="none" stroke="#232b35" stroke-dasharray="3 4"/>
-              <text x="885" y="45" text-anchor="middle" fill="#f2a93b" font-size="11">POLICY ORDER</text>
-              <text x="820" y="72" fill="#8b98a6" font-size="10">1  dmz → lan</text>
-              <text x="925" y="72" fill="#e0645a" font-size="10">DENY</text>
-              <text x="820" y="94" fill="#8b98a6" font-size="10">2  lan → dmz</text>
-              <text x="925" y="94" fill="#34d399" font-size="10">ACCEPT</text>
-              <text x="820" y="116" fill="#8b98a6" font-size="10">3  lan → wan</text>
-              <text x="925" y="116" fill="#34d399" font-size="10">ACCEPT</text>
-              <text x="820" y="138" fill="#8b98a6" font-size="10">4  any → any</text>
-              <text x="925" y="138" fill="#e0645a" font-size="10">DENY</text>
-              <text x="820" y="160" fill="#5a6672" font-size="9">implicit</text>
-            </g>
-          </svg>
-        </div>
-
         <div class="tab-meta" style="padding-top:26px;">
           <span class="meta-pill">Zones: <b>WAN / LAN / DMZ</b></span>
           <span class="meta-pill">DMZ → LAN: <b>Denied</b></span>
@@ -1047,7 +953,11 @@
           </div>
           <a class="chip" href="Hassan-Ismail-Portfolio.pdf" download>
             <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M4 20h16"/></svg>
-            Download PDF
+            Download Portfolio PDF
+          </a>
+          <a class="chip" href="Hassan-Ismail-Resume.docx" download>
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M4 20h16"/></svg>
+            Download Resume
           </a>
         </div>
       </div>
