@@ -487,6 +487,18 @@
   .contest-thumb img{width:100%;height:100%;object-fit:contain;display:block;}
   @media (max-width:860px){ .contest-grid{grid-template-columns:1fr;} }
 
+  /* ---------- firewall policy engine terminal shot ---------- */
+  .fwe-shot-wrap{padding:34px 40px 40px;display:flex;flex-direction:column;align-items:flex-start;}
+  .fwe-shot{
+    appearance:none;border:1px solid var(--line);background:var(--void);
+    padding:0;cursor:zoom-in;border-radius:3px;overflow:hidden;
+    width:100%;aspect-ratio:1726/586;
+    transition:border-color .15s ease;
+  }
+  .fwe-shot:hover{border-color:var(--up);}
+  .fwe-shot img{width:100%;height:100%;object-fit:contain;display:block;}
+  @media (max-width:860px){ .fwe-shot-wrap{padding-left:22px;padding-right:22px;} }
+
   /* ---------- footer / contact ---------- */
   footer{
     border-top:1px solid var(--line);
@@ -577,7 +589,7 @@
           <div class="eyebrow">Network &amp; Security Engineer</div>
           <h1 class="name">Hassan<br>Ismail<span>.</span></h1>
           <div class="role">CS &amp; AI Student, South Valley National University</div>
-          <p class="lede">Working across two tracks: competitive programming in C++ (ECPC/ICPC) and network security. On the security side, I design and harden network infrastructure — firewall clusters, SD‑WAN edges, site‑to‑site IPsec tunnels, and segmented DMZ architectures on <b style="color:var(--signal);">FortiGate</b> — then prove every path with a policy trace and a CLI ping.</p>
+          <p class="lede">Working across two tracks: competitive programming in C++ (ECPC/ICPC) and network security.</p>
           <p class="principle">"Failure is a milestone for success." <b>— a line I build by.</b></p>
           <div class="contact-row">
             <a class="chip primary" href="mailto:Hassanismailtheemperor@gmail.com">
@@ -794,8 +806,8 @@
     <div class="wrap">
       <div class="section-head reveal">
         <div class="eyebrow">Project Walkthroughs</div>
-        <h2 class="h2">A closer look at two builds</h2>
-        <p>The FortiOS training above, applied — each policy traced from interface to route to rule and confirmed live from the CLI.</p>
+        <h2 class="h2">A closer look at three builds</h2>
+        <p>The FortiOS training above, applied — plus the underlying policy logic rebuilt from scratch in C++, each one traced and verified rather than just claimed.</p>
       </div>
 
       <div class="index-list reveal">
@@ -814,6 +826,14 @@
             <span class="index-sub">Three‑legged firewall isolating public‑facing services from the LAN</span>
           </span>
           <span class="index-tags"><span>DMZ</span><span>Policy</span><span>Zoning</span></span>
+        </a>
+        <a class="index-row" href="#project-fwe">
+          <span class="index-num">03</span>
+          <span>
+            <span class="index-title">Firewall Policy Engine</span>
+            <span class="index-sub">Firewall rule-matching logic, rebuilt from scratch in C++</span>
+          </span>
+          <span class="index-tags"><span>C++</span><span>CIDR</span><span>Trace</span></span>
         </a>
       </div>
     </div>
@@ -946,6 +966,38 @@
     </div>
   </section>
 
+  <section id="project-fwe">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="eyebrow">Project 03</div>
+        <h2 class="h2">Firewall Policy Engine</h2>
+        <p>Real network security work above; this is the logic underneath it, rebuilt from scratch — not configured through a GUI, but implemented.</p>
+      </div>
+
+      <div class="case reveal">
+        <div class="case-header">
+          <div class="case-kicker">Architecture</div>
+          <div class="case-title">A rule-based firewall engine, written in C++</div>
+          <p class="case-desc">Loads ACL-style policy from a file and evaluates packets against source/destination subnet — real CIDR bitmask matching, not string comparison — plus protocol and port range. Rules are checked top to bottom, first match wins, with a default implicit deny if nothing matches. A trace mode walks every rule against every packet and reports exactly which condition (source, destination, protocol, or port) caused each one to match or fail.</p>
+        </div>
+        <div class="tab-meta" style="padding-top:26px;">
+          <span class="meta-pill">Language: <b>C++</b></span>
+          <span class="meta-pill">Matching: <b>CIDR · Protocol · Port</b></span>
+          <span class="meta-pill">Verification: <b>Per-rule trace mode</b></span>
+        </div>
+        <div class="fwe-shot-wrap">
+          <button class="fwe-shot" data-full="assets/fwe-terminal.png" data-cap="Firewall Policy Engine — real captured output, tracing three packets against a two-rule policy">
+            <img src="assets/fwe-terminal.png" alt="Terminal output of the Firewall Policy Engine tracing three packets against a two-rule policy, showing ALLOW, DENY, and implicit deny">
+          </button>
+          <a class="chip" href="https://github.com/themodsstealer/Firewall-policy-engine" target="_blank" rel="noopener" style="margin-top:16px;">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            View on GitHub
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <footer id="contact">
     <div class="wrap">
       <div class="footer-grid">
@@ -1016,7 +1068,7 @@
   const lb = document.getElementById('lightbox');
   const lbImg = document.getElementById('lightboxImg');
   const lbCap = document.getElementById('lightboxCap');
-  document.querySelectorAll('.shot, .cert-chip, .contest-thumb').forEach(shot=>{
+  document.querySelectorAll('.shot, .cert-chip, .contest-thumb, .fwe-shot').forEach(shot=>{
     shot.addEventListener('click', ()=>{
       lbImg.src = shot.dataset.full;
       lbCap.textContent = shot.dataset.cap || '';
